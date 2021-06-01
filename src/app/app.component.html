@@ -11,25 +11,27 @@
 
   <hr>
 
-  <div *ngIf="loadText; else loader">
-    <div *ngIf="todos.length; else noElements">
-      <div class="card">
-        <p *ngFor="let todo of todos">
-          <span [ngClass]="{complited: todo.complited}">{{todo?.title | titlecase}}</span>
+  <div *ngIf="!loading; else loadingBlock">
+    <div *ngIf="todos.length; else noTodos">
+      <div class="card" *ngFor="let todo of todos">
+        <p>
+          <span [class.completed]="todo.completed">{{todo.title | titlecase}}</span>
           <span>
-        <button class="btn btn-danger" (click)="removeTodo(todo.id)"> Удалить </button>
-        <button class="btn" [disabled]="todo.complited">Завершить</button>
-      </span>
+            <button class="btn btn-danger" (click)="removeTodo(todo.id)">Удалить</button>
+            <button class="btn" [disabled]="todo.completed" (click)="completeTodo(todo.id)">Завершить</button>
+          </span>
         </p>
       </div>
     </div>
-    <ng-template #noElements>
-      <p>No elements...</p>
+    <ng-template #noTodos>
+      <p>Нет элементов</p>
     </ng-template>
   </div>
-  <ng-template #loader>
-    <p>Loading...</p>
+
+  <ng-template #loadingBlock>
+    <p>Загрузка...</p>
   </ng-template>
+
 </div>
 
 
